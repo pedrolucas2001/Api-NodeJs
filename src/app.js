@@ -69,10 +69,7 @@ app.delete("/selecoes/:id", (requisicao,resposta)=>{
 })
 
 app.put("/selecoes/:id", (requisicao,resposta)=>{
-    // let index = buscarIndexSelecao(requisicao.params.id)
-    // selecoes[index].selecao = requisicao.body.selecao
-    // selecoes[index].grupo = requisicao.body.grupo
-    // resposta.json(selecoes)
+   
 
     const id = requisicao.params.id
     const selecao = requisicao.body
