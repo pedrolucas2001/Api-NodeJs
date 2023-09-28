@@ -53,10 +53,6 @@ app.post("/selecoes",(requisicao,resposta)=>{
 })
 
 app.delete("/selecoes/:id", (requisicao,resposta)=>{
-    // let index = buscarIndexSelecao(requisicao.params.id)
-    // selecoes.splice(index,1)
-    // resposta.send(`Seleção com id ${requisicao.params.id} excluída com sucesso!`)
-
     const id = requisicao.params.id;
     const sql = "DELETE FROM selecoes WHERE id = ?;"
     conexao.query(sql, id, (erro,resultado)=>{
