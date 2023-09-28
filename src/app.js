@@ -22,7 +22,6 @@ app.get("/selecoes",(requisicao, resposta)=>{
 
 app.get("/selecoes/:id",(requisicao,resposta)=>{
 
-    // resposta.json(buscarSelecaoPorId(requisicao.params.id)) Chamar as seleçoes por id
 
     const id = requisicao.params.id;
     const sql = "SELECT * FROM selecoes WHERE id = ?;"
