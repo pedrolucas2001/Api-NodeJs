@@ -1,83 +1,24 @@
 import express from "express";
-const app = express();
-import conexao from "../infra/conexao.js"
+import SelecaoController from "./app/controllers/SelecaoController.js";
 
+const app = express();
 //Indicar que o express irá ler body com JSON, sem isso o express não entenderá o formato JSON no body das requisições
 app.use(express.json()); 
 
-//ROTAS
-app.get("/selecoes",(requisicao, resposta)=>{
+//ROTAS CRUD
+//Listar todas as seleções
+app.get("/selecoes", SelecaoController.index)
 
-    // resposta.send(selecoes); Chamar todas as seleções
+//Listar seleção por id
+app.get("/selecoes/:id", SelecaoController.show)
 
-    const sql = "select * from selecoes;"
-    conexao.query(sql, (erro,resultado)=>{
-        if(erro){
-            resposta.status(404).json({"erro": erro})
-        }else{
-            resposta.status(200).json(resultado)
-        }
-    })
-})
+//Criar seleção
+app.post("/selecoes", SelecaoController.store)
 
-app.get("/selecoes/:id",(requisicao,resposta)=>{
+//Alterar seleção por id
+app.put("/selecoes/:id", SelecaoController.update)
 
-
-    const id = requisicao.params.id;
-    const sql = "SELECT * FROM selecoes WHERE id = ?;"
-    conexao.query(sql, id, (erro,resultado)=>{
-        const linha = resultado[0]
-        if(erro){
-            resposta.status(404).json({"erro": erro})
-        }else{
-            resposta.status(200).json(linha)
-        }
-    })
-})
-
-app.post("/selecoes",(requisicao,resposta)=>{
-    // selecoes.push(requisicao.body);
-    // resposta.status(201).send("Seleçao cadastrada com sucesso!");
-
-    const selecao = requisicao.body
-    const sql = "INSERT INTO selecoes SET ?;"
-    conexao.query(sql, selecao, (erro,resultado)=>{
-        
-        if(erro){
-            resposta.status(400).json({"erro": erro})
-        }else{
-            resposta.status(201).json(resultado)
-        }
-    })
-})
-
-app.delete("/selecoes/:id", (requisicao,resposta)=>{
-    const id = requisicao.params.id;
-    const sql = "DELETE FROM selecoes WHERE id = ?;"
-    conexao.query(sql, id, (erro,resultado)=>{
-        if(erro){
-            resposta.status(404).json({"erro": erro})
-        }else{
-            resposta.status(200).json(resultado)
-        }
-    })
-})
-
-app.put("/selecoes/:id", (requisicao,resposta)=>{
-   
-
-    const id = requisicao.params.id
-    const selecao = requisicao.body
-    const sql = "UPDATE selecoes SET ? WHERE id = ?;"
-    conexao.query(sql, [selecao,id], (erro,resultado)=>{
-        
-        if(erro){
-            resposta.status(400).json({"erro": erro})
-        }else{
-            resposta.status(200).json(resultado)
-        }
-    })
-})
-
+//Apagar seleção por id
+app.delete("/selecoes/:id", SelecaoController.delete)
 
 export default app;

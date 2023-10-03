@@ -10,4 +10,4 @@ const conexao = mysql.createConnection({
 
 
 conexao.connect()
-export default conexao
+export default conexao;
